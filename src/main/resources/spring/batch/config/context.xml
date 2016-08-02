@@ -38,22 +38,32 @@
 
   <bean id="transactionManager"
     class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
-
+  <!--================================-->
   <!--For Mybatis-Spring Integration -->
+  <!--================================-->
+
+  <!--Because sesison factory cannot switch executor (batch to non-batch), I chose to declare two different beans-->
+  <!--One for non-batch session-->
   <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
   </bean>
 
+  <!--One for batch session-->
   <bean id="batchSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
     <property name="dataSource" ref="dataSource" />
     <property name="mapperLocations" value="classpath*:net/lingyanzhou/mybatis_spring_learning/mapper/**/*.xml" />
   </bean>
-  <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+  <!--Scan mappers automatically (method 1): -->
+  <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
     <property name="basePackage" value="net.lingyanzhou.mybatis_spring_learning.mapper" />
     <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
-  </bean>-->
-<bean id="inRelatedMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+  </bean>
+  <!--Scan mappers automatically (method 2): -->
+  <!--<mybatis:scan base-package="org.mybatis.spring.sample.mapper" />-->
+  
+  <!--Declare a mapper one by one manually: -->
+  <!-- <bean id="inRelatedMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
   <property name="mapperInterface" value="net.lingyanzhou.mybatis_spring_learning.mapper.InRelatedMapper" />
   <property name="sqlSessionFactory" ref="sqlSessionFactory" />
-</bean>
+  </bean> -->
 </beans>

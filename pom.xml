@@ -115,6 +115,7 @@
 
 
     <!--Mybatis-Spring dependency -->
+    <!--MyBatis-spring 1.3 has MyBatisCursorItemReader-->
     <dependency>
       <groupId>org.mybatis</groupId>
       <artifactId>mybatis-spring</artifactId>
