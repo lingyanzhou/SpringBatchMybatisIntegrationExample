@@ -1,0 +1,59 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:mybatis="http://mybatis.org/schema/mybatis-spring"
+  xsi:schemaLocation="http://www.springframework.org/schema/beans 
+  http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+  http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd" >
+
+  <bean id="databaseConfigurer"
+    class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <property name="ignoreUnresolvablePlaceholders" value="true"/>
+    <property name="locations">
+      <list>
+        <value>classpath:spring/batch/job.properties</value>
+      </list>
+    </property>
+  </bean>
+
+
+
+  <bean id="jobRepository"
+    class="org.springframework.batch.core.repository.support.MapJobRepositoryFactoryBean">
+    <property name="transactionManager" ref="transactionManager" />
+  </bean>
+
+  <bean id="jobLauncher"
+    class="org.springframework.batch.core.launch.support.SimpleJobLauncher">
+    <property name="jobRepository" ref="jobRepository" />
+  </bean>
+
+  <!-- connect to database -->
+  <bean id="dataSource"
+    class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="${jdbc.driverClass}" />
+    <property name="url" value="${jdbc.url}" />
+    <property name="username" value="${jdbc.username}" />
+    <property name="password" value="${jdbc.password}" />
+  </bean>
+
+  <bean id="transactionManager"
+    class="org.springframework.batch.support.transaction.ResourcelessTransactionManager" />
+
+  <!--For Mybatis-Spring Integration -->
+  <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+  </bean>
+
+  <bean id="batchSqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+    <property name="dataSource" ref="dataSource" />
+    <property name="mapperLocations" value="classpath*:net/lingyanzhou/mybatis_spring_learning/mapper/**/*.xml" />
+  </bean>
+  <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <property name="basePackage" value="net.lingyanzhou.mybatis_spring_learning.mapper" />
+    <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory" />
+  </bean>-->
+<bean id="inRelatedMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+  <property name="mapperInterface" value="net.lingyanzhou.mybatis_spring_learning.mapper.InRelatedMapper" />
+  <property name="sqlSessionFactory" ref="sqlSessionFactory" />
+</bean>
+</beans>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration xmlns="http://logging.apache.org/log4j/2.0/config">
+
+  <Appenders>
+    <RollingFile name="RollingFile" fileName="log/App.log" filePattern="log/App-%d{MM-dd-yyyy}.log.gz"
+      ignoreExceptions="false">
+      <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"/>
+      <TimeBasedTriggeringPolicy />
+    </RollingFile>
+    <Console name="STDOUT" target="SYSTEM_OUT">
+      <PatternLayout pattern="%-5p | %d{yyyy-MM-dd HH:mm:ss} | [%t] %C{2} (%F:%L) - %m%n"/>
+    </Console>
+  </Appenders>
+
+  <Loggers>
+    <Root level="INFO">
+      <AppenderRef ref="STDOUT"/>
+      <AppenderRef ref="RollingFile"/>
+    </Root>
+  </Loggers>
+
+</Configuration>

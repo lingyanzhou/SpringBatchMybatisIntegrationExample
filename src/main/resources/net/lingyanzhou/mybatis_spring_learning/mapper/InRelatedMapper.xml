@@ -1,0 +1,15 @@
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.lingyanzhou.mybatis_spring_learning.mapper.InRelatedMapper">
+  <resultMap id = "inrelated" type = "net.lingyanzhou.mybatis_spring_learning.dto.InRelatedDto">
+    <id property = "irtId" column = "irt_id"/>
+    <result property = "irtData" column = "irt_data"/>
+  </resultMap>
+
+  <select id = "selectById" resultMap = "inrelated" parameterType="int">
+    SELECT irt_id, irt_data FROM in_related_table WHERE irt_id=#{id}
+  </select>
+
+</mapper>

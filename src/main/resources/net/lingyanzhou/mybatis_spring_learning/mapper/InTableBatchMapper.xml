@@ -1,0 +1,21 @@
+<!DOCTYPE mapper
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="net.lingyanzhou.mybatis_spring_learning.mapper.InTableBatchMapper">
+  <resultMap id = "in" type = "net.lingyanzhou.mybatis_spring_learning.dto.InDto">
+    <id property = "itId" column = "it_id"/>
+    <id property = "itIrtId" column = "it_irt_id"/>
+    <result property = "itData" column = "it_data"/>
+  </resultMap>
+
+  <select id = "getDataPaged" resultMap = "in">
+    SELECT it_id, it_irt_id, it_data FROM in_table LIMIT #{_skiprows}, #{_pagesize}
+  </select>
+
+  <select id = "getData" resultMap = "in">
+    SELECT it_id, it_irt_id, it_data FROM in_table
+  </select>
+  
+
+</mapper>
