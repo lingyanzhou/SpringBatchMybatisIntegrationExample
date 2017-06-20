@@ -14,9 +14,7 @@ public class App {
 	if (args.length>0) {
 		jobName = args[0];
 	}
-	assert jobName.equals("job");
-	assert jobName.equals("job-mybatis-paged");
-	assert jobName.equals("job-mybatis-cursor");
+	assert jobName.equals("job") || jobName.equals("job-mybatis-paged") || jobName.equals("job-mybatis-cursor");
 	  
 	String[] springConfig  = 
 		{	
